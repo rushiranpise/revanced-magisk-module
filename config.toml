@@ -9,6 +9,7 @@ patches-version = "dev"
 # you can use rvmm-config-gen to generate a config
 
 [YouTube-Morphe]
+rv-brand = "Morphe"
 app-name = "YouTube"
 patches-source = "MorpheApp/morphe-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -16,6 +17,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 
 [Music-Morphe]
+rv-brand = "Morphe"
 app-name = "Music"
 patches-source = "MorpheApp/morphe-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -23,6 +25,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
 
 [Reddit-Morphe]
+rv-brand = "Morphe"
 app-name = "Reddit"
 patches-source = "MorpheApp/morphe-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -30,6 +33,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit"
 uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
 
 [Twitter-Morphe]
+rv-brand = "Morphe"
 app-name = "Twitter"
 patches-source = "crimera/piko"
 cli-source = "MorpheApp/morphe-cli"
@@ -38,6 +42,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 
 [Adguard-Morphe]
+rv-brand = "Morphe"
 app-name = "Adguard"
 patches-source = "hoo-dles/morphe-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -45,13 +50,15 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguar
 uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
 
 [Automate-Morphe]
+rv-brand = "Morphe"
 app-name = "Automate"
-patches-source = "hoo-dles/morphe-patches"
+patches-source = "BholeyKaBhakt/android-patches-xtra"
 cli-source = "MorpheApp/morphe-cli"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/llamalab/automate-llamalab"
 uptodown-dlurl = "https://automate-beta.en.uptodown.com/android"
 
 [CamScanner-Morphe]
+rv-brand = "Morphe"
 app-name = "CamScanner"
 patches-source = "hoo-dles/morphe-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -59,6 +66,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/intsig-pte/camscanner-phone-pdf
 uptodown-dlurl = "https://camscanner-pdf-creator.en.uptodown.com/android"
 
 [Duolingo-Morphe]
+rv-brand = "Morphe"
 app-name = "Duolingo"
 patches-source = "hoo-dles/morphe-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -66,6 +74,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/duolingo/duolingo-duolingo"
 uptodown-dlurl = "https://duolingo.en.uptodown.com/android"
 
 [Eyecon-Morphe]
+rv-brand = "Morphe"
 app-name = "Eyecon"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -73,6 +82,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/eyecon-phone-dialer-contacts/ey
 uptodown-dlurl = "https://eyecon-phone-dialer-and-cont-eyecon.en.uptodown.com/android"
 
 [Facebook-Morphe]
+rv-brand = "Morphe"
 app-name = "Facebook"
 patches-source = "meridianfresco/morphe-meta-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -80,6 +90,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/facebook"
 uptodown-dlurl = "https://facebook.en.uptodown.com/android"
 
 [Fing-Morphe]
+rv-brand = "Morphe"
 app-name = "Fing"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -87,6 +98,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/fing-limited/fing-network-tools
 uptodown-dlurl = "https://fing-network-tools.en.uptodown.com/android"
 
 [Google-Photos-Morphe]
+rv-brand = "Morphe"
 app-name = "Photos"
 patches-source = "RookieEnough/De-Vanced"
 cli-source = "MorpheApp/morphe-cli"
@@ -94,6 +106,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
 
 [Instagram-Morphe]
+rv-brand = "Morphe"
 app-name = "Instagram"
 patches-source = "crimera/piko"
 cli-source = "MorpheApp/morphe-cli"
@@ -101,6 +114,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
 uptodown-dlurl = "https://instagram.en.uptodown.com/android"
 
 [MacroDroid-Morphe]
+rv-brand = "Morphe"
 app-name = "MacroDroid"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -108,6 +122,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/arlosoft/macrodroid-device-auto
 uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
 
 [Mapy-Morphe]
+rv-brand = "Morphe"
 app-name = "Mapy"
 patches-source = "brosssh/morphe-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -115,6 +130,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/seznam-cz-a-s/mapy-cz-navigatio
 uptodown-dlurl = "https://mapy-cz.en.uptodown.com/android"
 
 [Proton-Mail-Morphe]
+rv-brand = "Morphe"
 app-name = "Proton Mail"
 patches-source = "RookieEnough/De-Vanced"
 cli-source = "MorpheApp/morphe-cli"
@@ -122,6 +138,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonma
 uptodown-dlurl = "https://protonmail.en.uptodown.com/android"
 
 [Proton-Vpn-Hoodles-Morphe]
+rv-brand = "Morphe"
 app-name = "Proton VPN Hoodles"
 patches-source = "RookieEnough/De-Vanced"
 cli-source = "MorpheApp/morphe-cli"
@@ -129,6 +146,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvp
 uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
 
 [Proton-Vpn-Paresh-Morphe]
+rv-brand = "Morphe"
 app-name = "Proton VPN Paresh"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -136,6 +154,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvp
 uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
 
 [Speedtest-Morphe]
+rv-brand = "Morphe"
 app-name = "Speedtest"
 patches-source = "BholeyKaBhakt/android-patches-xtra"
 cli-source = "MorpheApp/morphe-cli"
@@ -143,6 +162,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/ookla/speedtest"
 uptodown-dlurl = "https://speedtest-net-mobile.en.uptodown.com/android"
 
 [Splitwise-Morphe]
+rv-brand = "Morphe"
 app-name = "Splitwise"
 patches-source = "abhis1n/Morphe-Patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -150,7 +170,41 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/splitwise/splitwise"
 uptodown-dlurl = "https://splitwise.en.uptodown.com/android"
 
 [Strava-Morphe]
+rv-brand = "Morphe"
 app-name = "Strava"
 patches-source = "RookieEnough/De-Vanced"
 cli-source = "MorpheApp/morphe-cli"
 uptodown-dlurl = "https://strava.en.uptodown.com/android"
+
+[Transit-Morphe]
+rv-brand = "Morphe"
+app-name = "Transit"
+patches-source = "andronedev/morphe-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/transit-app-inc/transit-real-time-transit-app"
+uptodown-dlurl = "https://transit.en.uptodown.com/android"
+
+[Truecaller-Morphe]
+rv-brand = "Morphe"
+app-name = "Truecaller"
+patches-source = "Paresh-Maheshwari/paresh-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/true-software-scandinavia-ab/truecaller-caller-id-block"
+uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
+
+[WPS-Office-Morphe]
+rv-brand = "Morphe"
+app-name = "WPS Office"
+patches-source = "hoo-dles/morphe-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/wps-software-pte-ltd/wps-office-pdf"
+uptodown-dlurl = "https://wps-office.en.uptodown.com/android"
+
+[Komoot-Morphe]
+rv-brand = "Morphe"
+app-name = "Komoot"
+patches-source = "hoo-dles/morphe-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/komoot-gmbh/komoot-cycling-hiking-mountain-biking-maps"
+uptodown-dlurl = "https://komoot.en.uptodown.com/android"
+
