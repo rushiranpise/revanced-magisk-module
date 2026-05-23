@@ -138,16 +138,16 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonma
 uptodown-dlurl = "https://protonmail.en.uptodown.com/android"
 
 [Proton-Vpn-Hoodles-Morphe]
-rv-brand = "Morphe"
-app-name = "Proton VPN Hoodles"
+rv-brand = "Morphe-Hoodles"
+app-name = "Proton VPN"
 patches-source = "RookieEnough/De-Vanced"
 cli-source = "MorpheApp/morphe-cli"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
 uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
 
 [Proton-Vpn-Paresh-Morphe]
-rv-brand = "Morphe"
-app-name = "Proton VPN Paresh"
+rv-brand = "Morphe-Paresh"
+app-name = "Proton VPN"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 cli-source = "MorpheApp/morphe-cli"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/proton-technologies-ag/protonvpn-secure-and-free-vpn"
