@@ -1,4 +1,6 @@
 Adguard-Morphe: 4.12.81  
+CamScanner-Morphe: 7.15.5.2604080000  
+Duolingo-Morphe: 6.77.5  
 Music-Morphe: 8.47.56  
 Reddit-Morphe: 2026.14.0  
 YouTube-Morphe: 20.47.62  
@@ -17,8 +19,12 @@ Patches: hoo-dles/patches-1.33.0.mpp
 [Changelog](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.33.0)
 
 CLI: MorpheApp/morphe-cli-1.9.0-dev.2-all.jar  
+CLI: MorpheApp/morphe-cli-1.9.0-dev.2-all.jar  
+CLI: MorpheApp/morphe-cli-1.9.0-dev.2-all.jar  
+CLI: MorpheApp/morphe-cli-1.9.0-dev.2-all.jar  
 Patches: MorpheApp/patches-1.30.0-dev.1.mpp  
 [Changelog](https://github.com/MorpheApp/morphe-patches/releases/tag/v1.30.0-dev.1)
 
+CLI: MorpheApp/morphe-cli-1.9.0-dev.2-all.jar  
 CLI: MorpheApp/morphe-cli-1.9.0-dev.2-all.jar  
 CLI: MorpheApp/morphe-cli-1.9.0-dev.2-all.jar    
