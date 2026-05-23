@@ -33,6 +33,7 @@ uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
 app-name = "Twitter"
 patches-source = "crimera/piko"
 cli-source = "MorpheApp/morphe-cli"
+include-stock = "split"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 
@@ -43,3 +44,30 @@ cli-source = "MorpheApp/morphe-cli"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/adguard-software-limited/adguard"
 uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
 
+[Automate-Morphe]
+app-name = "Automate"
+patches-source = "hoo-dles/morphe-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/llamalab/automate-llamalab/"
+uptodown-dlurl = "https://automate-beta.en.uptodown.com/android"
+
+[CamScanner-Morphe]
+app-name = "CamScanner"
+patches-source = "hoo-dles/morphe-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/intsig-pte/camscanner-phone-pdf-creator/"
+uptodown-dlurl = "https://camscanner-pdf-creator.en.uptodown.com/android"
+
+[Duolingo-Morphe]
+app-name = "Duolingo"
+patches-source = "hoo-dles/morphe-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/duolingo/duolingo-duolingo/"
+uptodown-dlurl = "https://duolingo.en.uptodown.com/android"
+
+[Eyecon-Morphe]
+app-name = "Eyecon"
+patches-source = "/Paresh-Maheshwari/paresh-patches"
+cli-source = "MorpheApp/morphe-cli"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/eyecon-phone-dialer-contacts/eyecon-caller-id-spam-block/"
+uptodown-dlurl = "https://eyecon-phone-dialer-and-cont-eyecon.en.uptodown.com/android"
