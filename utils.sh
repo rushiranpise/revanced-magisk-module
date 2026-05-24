@@ -55,7 +55,7 @@ abort() {
 java() { env -i java --enable-native-access=ALL-UNNAMED "$@"; }
 
 get_prebuilts() {
-	local cli_src=$1 cli_ver=$2 patches_src=$3 patches_ver=$4
+	local cli_src=$1 cli_ver=$2 patches_src=$3 patches_ver=$4 gitlab_patches_src=${5:-}
 	pr "Getting prebuilts (${patches_src%/*})" >&2
 	local cl_dir=${patches_src%/*}
 	cl_dir=${TEMP_DIR}/${cl_dir,,}-rv
@@ -97,29 +97,110 @@ get_prebuilts() {
 			file=$(grep "/[^/]*${ver#v}[^/]*\$" <<<"$file" | head -1)
 		fi
 		if [ -z "$file" ]; then
+			# Try GitHub first
+			local success=false
 			local resp asset name
-			resp=$(gh_req "$rv_rel" -) || return 1
-			tag_name=$(jq -r '.tag_name' <<<"$resp") || return 1
-			matches=$(jq -e '.assets | map(select(.name | (endswith("asc") or endswith("json")) | not))' <<<"$resp") || return 1
-			if [ "$(jq 'length' <<<"$matches")" -gt 1 ]; then
-				local matches_new
-				matches_new=$(jq -e -r 'map(select(.name | contains("-dev") | not))' <<<"$matches")
-				if [ "$(jq 'length' <<<"$matches_new")" -eq 1 ]; then
-					matches=$matches_new
+			if resp=$(gh_req "$rv_rel" - 2>/dev/null) && \
+			   tag_name=$(jq -r '.tag_name' <<<"$resp") && \
+			   matches=$(jq -e '.assets | map(select(.name | (endswith("asc") or endswith("json")) | not))' <<<"$resp") && \
+			   [ -n "$matches" ] && [ "$(jq 'length' <<<"$matches")" -gt 0 ]; then
+				if [ "$(jq 'length' <<<"$matches")" -gt 1 ]; then
+					local matches_new
+					matches_new=$(jq -e -r 'map(select(.name | contains("-dev") | not))' <<<"$matches")
+					if [ "$(jq 'length' <<<"$matches_new")" -eq 1 ]; then
+						matches=$matches_new
+					fi
 				fi
+				if [ "$(jq 'length' <<<"$matches")" -eq 0 ]; then
+					epr "No asset was found"
+					return 1
+				elif [ "$(jq 'length' <<<"$matches")" -ne 1 ]; then
+					wpr "More than 1 asset was found for this release. Falling back to the first one found..."
+				fi
+				asset=$(jq -r ".[0]" <<<"$matches")
+				url=$(jq -r .url <<<"$asset")
+				name=$(jq -r .name <<<"$asset")
+				file="${dir}/${name}"
+				gh_dl "$file" "$url" >&2 || return 1
+				echo "$tag: $(cut -d/ -f1 <<<"$src")/${name}  " >>"${cl_dir}/changelog.md"
+				success=true
 			fi
-			if [ "$(jq 'length' <<<"$matches")" -eq 0 ]; then
-				epr "No asset was found"
+
+			# GitLab fallback only for patches and only if a GitLab source is provided
+			if [ "$success" = false ] && [ "$tag" = "Patches" ] && [ -n "$gitlab_patches_src" ]; then
+				pr "GitHub failed, trying GitLab with $gitlab_patches_src" >&2
+				local encoded_repo=$(echo "$gitlab_patches_src" | sed 's/\//%2F/g')
+				local gl_api_base="https://gitlab.com/api/v4/projects/${encoded_repo}/releases"
+				pr "GitLab API URL: $gl_api_base" >&2
+
+				local gl_resp_file="${TEMP_DIR}/gitlab_response_$$.json"
+				local gl_tag_name gl_asset_url gl_asset_name
+
+				# Helper to fetch a URL and save the full response to a file
+				fetch_to_file() {
+					local url=$1 outfile=$2
+					local curl_cmd="curl -L --max-time 30 --retry 2 --fail -s -S"
+					if [ -n "${GITLAB_TOKEN-}" ]; then
+						curl_cmd+=" -H \"Authorization: Bearer ${GITLAB_TOKEN}\""
+					fi
+					eval "$curl_cmd \"$url\" -o \"$outfile\""
+				}
+
+				if [ "$ver" = "dev" ]; then
+					if ! fetch_to_file "${gl_api_base}?per_page=100" "$gl_resp_file"; then
+						epr "GitLab API request failed for dev releases"
+						rm -f "$gl_resp_file"
+						return 1
+					fi
+					gl_tag_name=$(jq -r '.[] | .tag_name' "$gl_resp_file" 2>/dev/null | get_highest_ver) || { epr "Failed to get highest version"; rm -f "$gl_resp_file"; return 1; }
+					rm -f "$gl_resp_file"
+					if ! fetch_to_file "${gl_api_base}/${gl_tag_name}" "$gl_resp_file"; then
+						epr "GitLab API request failed for release ${gl_tag_name}"
+						rm -f "$gl_resp_file"
+						return 1
+					fi
+				elif [ "$ver" = "latest" ]; then
+					if ! fetch_to_file "${gl_api_base}/permalink/latest" "$gl_resp_file"; then
+						epr "GitLab API request failed for latest release"
+						rm -f "$gl_resp_file"
+						return 1
+					fi
+					gl_tag_name=$(jq -r '.tag_name' "$gl_resp_file") || { epr "Failed to get tag name from latest release"; rm -f "$gl_resp_file"; return 1; }
+				else
+					if ! fetch_to_file "${gl_api_base}/${ver}" "$gl_resp_file"; then
+						epr "GitLab API request failed for release ${ver}"
+						rm -f "$gl_resp_file"
+						return 1
+					fi
+					gl_tag_name="$ver"
+				fi
+
+				# Extract asset URL and name (look for .rvp or .mpp in links)
+				gl_asset_url=$(jq -r '.assets.links[] | select(.name | endswith(".rvp") or endswith(".mpp")) | .direct_asset_url // .url' "$gl_resp_file" 2>/dev/null | head -1)
+				gl_asset_name=$(jq -r '.assets.links[] | select(.name | endswith(".rvp") or endswith(".mpp")) | .name' "$gl_resp_file" 2>/dev/null | head -1)
+				rm -f "$gl_resp_file"
+
+				if [ -z "$gl_asset_url" ] || [ "$gl_asset_url" = "null" ]; then
+					epr "No patches asset (.rvp or .mpp) found in GitLab release"
+					return 1
+				fi
+				pr "GitLab asset URL: $gl_asset_url" >&2
+
+				gl_file="${dir}/${gl_asset_name}"
+				if ! req "$gl_asset_url" "$gl_file" >&2; then
+					epr "Failed to download from GitLab: $gl_asset_url"
+					return 1
+				fi
+				file="$gl_file"
+				tag_name="$gl_tag_name"
+				name="$gl_asset_name"
+				echo "$tag: $(cut -d/ -f1 <<<"$gitlab_patches_src")/${gl_asset_name}  " >>"${cl_dir}/changelog.md"
+				success=true
+			fi
+
+			if [ "$success" = false ]; then
 				return 1
-			elif [ "$(jq 'length' <<<"$matches")" -ne 1 ]; then
-				wpr "More than 1 asset was found for this release. Falling back to the first one found..."
 			fi
-			asset=$(jq -r ".[0]" <<<"$matches")
-			url=$(jq -r .url <<<"$asset")
-			name=$(jq -r .name <<<"$asset")
-			file="${dir}/${name}"
-			gh_dl "$file" "$url" >&2 || return 1
-			echo "$tag: $(cut -d/ -f1 <<<"$src")/${name}  " >>"${cl_dir}/changelog.md"
 		else
 			grab_cl=false
 			name=$(basename "$file")
@@ -232,6 +313,7 @@ _req() {
 }
 req() { _req "$1" "$2" -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"; }
 gh_req() { _req "$1" "$2" -H "$GH_HEADER"; }
+gl_req() { _req "$1" "$2" -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0" ${GITLAB_TOKEN:+-H "Authorization: Bearer $GITLAB_TOKEN"}; }
 gh_dl() {
 	if [ ! -f "$1" ]; then
 		pr "Getting '$1' from '$2'"
