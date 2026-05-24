@@ -54,7 +54,6 @@ abort() {
 }
 java() { env -i java --enable-native-access=ALL-UNNAMED "$@"; }
 
-# get_prebuilts now accepts an optional 5th argument: gitlab_patches_src (e.g., "user/repo")
 get_prebuilts() {
 	local cli_src=$1 cli_ver=$2 patches_src=$3 patches_ver=$4 gitlab_patches_src=${5:-}
 	pr "Getting prebuilts (${patches_src%/*})" >&2
@@ -134,8 +133,8 @@ get_prebuilts() {
 				local gl_api_base="https://gitlab.com/api/v4/projects/${encoded_repo}/releases"
 				local gl_resp gl_tag_name gl_asset gl_asset_url gl_asset_name gl_file
 
-				# Helper to fetch and validate JSON response
-				local fetch_and_validate() {
+				# Helper to fetch and validate JSON response (no 'local' keyword)
+				fetch_and_validate() {
 					local url=$1
 					local output
 					output=$(gl_req "$url" - 2>/dev/null) || return 1
