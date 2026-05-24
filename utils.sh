@@ -54,8 +54,9 @@ abort() {
 }
 java() { env -i java --enable-native-access=ALL-UNNAMED "$@"; }
 
+# get_prebuilts now accepts an optional 5th argument: gitlab_patches_src (e.g., "user/repo")
 get_prebuilts() {
-	local cli_src=$1 cli_ver=$2 patches_src=$3 patches_ver=$4
+	local cli_src=$1 cli_ver=$2 patches_src=$3 patches_ver=$4 gitlab_patches_src=${5:-}
 	pr "Getting prebuilts (${patches_src%/*})" >&2
 	local cl_dir=${patches_src%/*}
 	cl_dir=${TEMP_DIR}/${cl_dir,,}-rv
@@ -126,10 +127,10 @@ get_prebuilts() {
 				success=true
 			fi
 
-			# GitLab fallback only for patches
-			if [ "$success" = false ] && [ "$tag" = "Patches" ]; then
-				pr "GitHub failed, trying GitLab for $src" >&2
-				local encoded_repo="${src//\//%2F}"
+			# GitLab fallback only for patches and only if a GitLab source is provided
+			if [ "$success" = false ] && [ "$tag" = "Patches" ] && [ -n "$gitlab_patches_src" ]; then
+				pr "GitHub failed, trying GitLab with $gitlab_patches_src" >&2
+				local encoded_repo="${gitlab_patches_src//\//%2F}"
 				local gl_api_base="https://gitlab.com/api/v4/projects/${encoded_repo}/releases"
 				local gl_resp gl_tag_name gl_asset gl_asset_url gl_asset_name gl_file
 
@@ -162,7 +163,7 @@ get_prebuilts() {
 				file="$gl_file"
 				tag_name="$gl_tag_name"
 				name="$gl_asset_name"
-				echo "$tag: $(cut -d/ -f1 <<<"$src")/${gl_asset_name}  " >>"${cl_dir}/changelog.md"
+				echo "$tag: $(cut -d/ -f1 <<<"$gitlab_patches_src")/${gl_asset_name}  " >>"${cl_dir}/changelog.md"
 				success=true
 			fi
 
