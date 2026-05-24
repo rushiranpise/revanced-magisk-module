@@ -5,9 +5,11 @@ Duolingo-Morphe: 6.77.5
 Eyecon-Morphe: 4.2026.04.05.1300  
 Fing-Morphe: 12.11.9  
 Google-Photos-Morphe: 7.77.0.916869048  
+Komoot-Morphe: 2025.38.2  
 Mapy-Morphe: 26.3.1  
 Music-Morphe: 8.47.56  
 Proton-Mail-Morphe: 4.15.0  
+Proton-Vpn-Hoodles-Morphe: 5.17.72.0  
 Proton-Vpn-Paresh-Morphe: 5.17.72.0  
 Reddit-Morphe: 2026.10.0  
 Speedtest-Morphe: 7.0.3  
@@ -61,6 +63,5 @@ Patches: Paresh-Maheshwari/patches-1.17.0-dev.2.mpp
 Patches: Paresh-Maheshwari/patches-1.17.0-dev.2.mpp  
 [Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.2)
 
-CLI: ReVanced/revanced-cli-6.0.0-all.jar  
 Patches: RookieEnough/patches-1.0.4.mpp  
 [Changelog](https://github.com/RookieEnough/De-Vanced/releases/tag/v1.0.4)  
