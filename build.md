@@ -21,4 +21,6 @@ Patches: Paresh-Maheshwari/patches-1.17.0-dev.1.mpp
 [Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.1)
 
 Patches: Paresh-Maheshwari/patches-1.17.0-dev.1.mpp  
-[Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.1)  
+[Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.1)
+
+CLI: ReVanced/revanced-cli-6.0.0-all.jar    
