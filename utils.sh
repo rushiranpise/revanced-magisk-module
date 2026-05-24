@@ -129,8 +129,11 @@ get_prebuilts() {
 			# GitLab fallback only for patches and only if a GitLab source is provided
 			if [ "$success" = false ] && [ "$tag" = "Patches" ] && [ -n "$gitlab_patches_src" ]; then
 				pr "GitHub failed, trying GitLab with $gitlab_patches_src" >&2
+				# Properly URL-encode the repository path (replace / with %2F)
 				local encoded_repo=$(echo "$gitlab_patches_src" | sed 's/\//%2F/g')
 				local gl_api_base="https://gitlab.com/api/v4/projects/${encoded_repo}/releases"
+				pr "GitLab API URL: $gl_api_base" >&2
+
 				local gl_resp gl_tag_name gl_asset gl_asset_url gl_asset_name gl_file
 
 				# Helper to fetch and validate JSON response
@@ -138,11 +141,15 @@ get_prebuilts() {
 					local url=$1
 					local output
 					output=$(gl_req "$url" - 2>/dev/null) || return 1
+					# Print first 500 chars of response for debugging
+					pr "GitLab response (first 500 chars):" >&2
+					echo "$output" | head -c 500 >&2
+					echo >&2
 					if [ -n "$output" ] && [[ "$output" =~ ^[\[\{] ]]; then
 						echo "$output"
 						return 0
 					else
-						epr "Invalid or non-JSON response from GitLab: $(echo "$output" | head -c 200)"
+						epr "Invalid or non-JSON response from GitLab"
 						return 1
 					fi
 				}
@@ -179,6 +186,7 @@ get_prebuilts() {
 
 				gl_asset_url=$(jq -r '.url' <<<"$gl_asset")
 				gl_asset_name=$(jq -r '.name' <<<"$gl_asset")
+				pr "GitLab asset URL: $gl_asset_url" >&2
 				if [ -z "$gl_asset_url" ] || [ "$gl_asset_url" = "null" ]; then
 					epr "Invalid or empty asset URL from GitLab"
 					return 1
