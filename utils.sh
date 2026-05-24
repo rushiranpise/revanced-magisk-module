@@ -54,7 +54,6 @@ abort() {
 }
 java() { env -i java --enable-native-access=ALL-UNNAMED "$@"; }
 
-# get_prebuilts now accepts an optional 5th argument: gitlab_patches_src (e.g., "user/repo")
 get_prebuilts() {
 	local cli_src=$1 cli_ver=$2 patches_src=$3 patches_ver=$4 gitlab_patches_src=${5:-}
 	pr "Getting prebuilts (${patches_src%/*})" >&2
@@ -134,32 +133,61 @@ get_prebuilts() {
 				local gl_api_base="https://gitlab.com/api/v4/projects/${encoded_repo}/releases"
 				local gl_resp gl_tag_name gl_asset gl_asset_url gl_asset_name gl_file
 
+				# Helper to check if response is valid JSON
+				local fetch_and_validate() {
+					local url=$1
+					local output
+					output=$(gl_req "$url" - 2>/dev/null) || return 1
+					# Check if output is non-empty and starts with '{' or '['
+					if [ -n "$output" ] && [[ "$output" =~ ^[\[\{] ]]; then
+						echo "$output"
+						return 0
+					else
+						epr "Invalid JSON response from GitLab: $output"
+						return 1
+					fi
+				}
+
 				if [ "$ver" = "dev" ]; then
-					gl_resp=$(gl_req "$gl_api_base" -) || { epr "GitLab API request failed"; return 1; }
+					if ! gl_resp=$(fetch_and_validate "$gl_api_base"); then
+						epr "GitLab API request failed for dev releases"
+						return 1
+					fi
 					gl_tag_name=$(jq -r '.[] | .tag_name' <<<"$gl_resp" | get_highest_ver) || { epr "Failed to get highest version"; return 1; }
-					gl_api_base+="/${gl_tag_name}"
-					gl_resp=$(gl_req "$gl_api_base" -) || return 1
+					if ! gl_resp=$(fetch_and_validate "${gl_api_base}/${gl_tag_name}"); then
+						epr "GitLab API request failed for release ${gl_tag_name}"
+						return 1
+					fi
 				elif [ "$ver" = "latest" ]; then
-					gl_api_base+="/permalink/latest"
-					gl_resp=$(gl_req "$gl_api_base" -) || return 1
-					gl_tag_name=$(jq -r '.tag_name' <<<"$gl_resp") || return 1
+					if ! gl_resp=$(fetch_and_validate "${gl_api_base}/permalink/latest"); then
+						epr "GitLab API request failed for latest release"
+						return 1
+					fi
+					gl_tag_name=$(jq -r '.tag_name' <<<"$gl_resp") || { epr "Failed to get tag name from latest release"; return 1; }
 				else
-					gl_api_base+="/${ver}"
-					gl_resp=$(gl_req "$gl_api_base" -) || return 1
+					if ! gl_resp=$(fetch_and_validate "${gl_api_base}/${ver}"); then
+						epr "GitLab API request failed for release ${ver}"
+						return 1
+					fi
 					gl_tag_name="$ver"
 				fi
 
+				# Extract asset URL and name
 				gl_asset=$(jq -r '.assets.links[] | select(.name | endswith(".rvp") or endswith(".mpp")) | {url: .direct_asset_url, name: .name}' <<<"$gl_resp" | head -1)
-				if [ -z "$gl_asset" ]; then
+				if [ -z "$gl_asset" ] || [ "$gl_asset" = "null" ]; then
 					epr "No patches asset (.rvp or .mpp) found in GitLab release"
 					return 1
 				fi
 
 				gl_asset_url=$(jq -r '.url' <<<"$gl_asset")
 				gl_asset_name=$(jq -r '.name' <<<"$gl_asset")
+				if [ -z "$gl_asset_url" ] || [ "$gl_asset_url" = "null" ]; then
+					epr "Invalid asset URL from GitLab"
+					return 1
+				fi
 				gl_file="${dir}/${gl_asset_name}"
 
-				req "$gl_asset_url" "$gl_file" >&2 || return 1
+				req "$gl_asset_url" "$gl_file" >&2 || { epr "Failed to download from GitLab"; return 1; }
 				file="$gl_file"
 				tag_name="$gl_tag_name"
 				name="$gl_asset_name"
@@ -304,7 +332,7 @@ semver_validate() {
 	[ ${#ac} = 0 ]
 }
 get_patch_last_supported_ver() {
-	local list_patches=$1 pkg_name=$2 inc_sel=$3 _exc_sel=$4 _exclusive=$5 # TODO: resolve using all of these
+	local list_patches=$1 pkg_name=$2 inc_sel=$3 _exc_sel=$4 _exclusive=$5
 	local op
 	if [ "$inc_sel" ]; then
 		if ! op=$(awk '{$1=$1}1' <<<"$list_patches"); then
@@ -337,7 +365,6 @@ patches_list_versions() {
 	local cli_jar=$1 patches_jar=$2 pkg_name=$3 op cmd
 	local cmd_base="java -jar '$cli_jar' list-versions"
 
-	# TODO: remove this later
 	local cli_name
 	cli_name=$(basename "$cli_jar")
 	if [ "${cli_name::8}" = revanced ]; then cmd_base+=" -b"; fi
@@ -384,7 +411,6 @@ merge_splits() {
 		epr "APKEditor error: $OP"
 		return 1
 	fi
-	# sign the merged stock apk
 	if ! OP=$(java -jar "$APKSIGNER" sign --ks ks-p12.keystore --ks-pass pass:123456789 --key-pass pass:123456789 --ks-key-alias jhc \
 		--out "${output}" "${output}-unsigned"); then
 		epr "apksigner error: $OP"
@@ -424,7 +450,6 @@ apkmirror_search() {
 		fi
 	done
 	if [ "$n" -eq 2 ] && [ "$dlurl" ]; then
-		# only one apk exists, return it
 		echo "$dlurl"
 		return 0
 	fi
@@ -597,7 +622,6 @@ patch_apk() {
 	local cmd="java -jar '$cli_jar' patch '$stock_input' --purge -o '$patched_apk' -p '$patches_jar' --keystore=ks.keystore \
 --keystore-entry-password=123456789 --keystore-password=123456789 --signer=jhc --keystore-entry-alias=jhc -t '$patched_apk-tmp' $patcher_args"
 
-	# TODO: remove this later
 	local cli_name
 	cli_name=$(basename "$cli_jar")
 	if [ "${cli_name::8}" = revanced ]; then cmd+=" -b"; fi
