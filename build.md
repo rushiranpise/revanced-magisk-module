@@ -15,6 +15,7 @@ Reddit-Morphe: 2026.10.0
 Speedtest-Morphe: 7.0.3  
 Splitwise-Morphe: 26.4.3  
 Strava-Morphe: 464.15  
+TikTok-Morphe: 43.6.2  
 Transit-Morphe: 6.1.4  
 YouTube-Morphe: 20.47.62  
 
@@ -47,6 +48,12 @@ Patches: meridianfresco/patches-1.0.0.mpp
 
 Patches: MorpheApp/patches-1.29.0.mpp  
 [Changelog](https://github.com/MorpheApp/morphe-patches/releases/tag/v1.29.0)
+
+Patches: Paresh-Maheshwari/patches-1.17.0-dev.2.mpp  
+[Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.2)
+
+Patches: Paresh-Maheshwari/patches-1.17.0-dev.2.mpp  
+[Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.2)
 
 Patches: Paresh-Maheshwari/patches-1.17.0-dev.2.mpp  
 [Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.2)
