@@ -129,11 +129,11 @@ get_prebuilts() {
 			# GitLab fallback only for patches and only if a GitLab source is provided
 			if [ "$success" = false ] && [ "$tag" = "Patches" ] && [ -n "$gitlab_patches_src" ]; then
 				pr "GitHub failed, trying GitLab with $gitlab_patches_src" >&2
-				local encoded_repo="${gitlab_patches_src//\//%2F}"
+				local encoded_repo=$(echo "$gitlab_patches_src" | sed 's/\//%2F/g')
 				local gl_api_base="https://gitlab.com/api/v4/projects/${encoded_repo}/releases"
 				local gl_resp gl_tag_name gl_asset gl_asset_url gl_asset_name gl_file
 
-				# Helper to fetch and validate JSON response (no 'local' keyword)
+				# Helper to fetch and validate JSON response
 				fetch_and_validate() {
 					local url=$1
 					local output
