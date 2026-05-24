@@ -129,70 +129,64 @@ get_prebuilts() {
 			# GitLab fallback only for patches and only if a GitLab source is provided
 			if [ "$success" = false ] && [ "$tag" = "Patches" ] && [ -n "$gitlab_patches_src" ]; then
 				pr "GitHub failed, trying GitLab with $gitlab_patches_src" >&2
-				# Properly URL-encode the repository path (replace / with %2F)
 				local encoded_repo=$(echo "$gitlab_patches_src" | sed 's/\//%2F/g')
 				local gl_api_base="https://gitlab.com/api/v4/projects/${encoded_repo}/releases"
 				pr "GitLab API URL: $gl_api_base" >&2
 
-				local gl_resp gl_tag_name gl_asset gl_asset_url gl_asset_name gl_file
+				local gl_resp_file="${TEMP_DIR}/gitlab_response_$$.json"
+				local gl_tag_name gl_asset_url gl_asset_name
 
-				# Helper to fetch and validate JSON response
-				fetch_and_validate() {
-					local url=$1
-					local output
-					output=$(gl_req "$url" - 2>/dev/null) || return 1
-					# Print first 500 chars of response for debugging
-					pr "GitLab response (first 500 chars):" >&2
-					echo "$output" | head -c 500 >&2
-					echo >&2
-					if [ -n "$output" ] && [[ "$output" =~ ^[\[\{] ]]; then
-						echo "$output"
-						return 0
-					else
-						epr "Invalid or non-JSON response from GitLab"
-						return 1
+				# Helper to fetch a URL and save the full response to a file
+				fetch_to_file() {
+					local url=$1 outfile=$2
+					local curl_cmd="curl -L --max-time 30 --retry 2 --fail -s -S"
+					if [ -n "${GITLAB_TOKEN-}" ]; then
+						curl_cmd+=" -H \"Authorization: Bearer ${GITLAB_TOKEN}\""
 					fi
+					eval "$curl_cmd \"$url\" -o \"$outfile\""
 				}
 
 				if [ "$ver" = "dev" ]; then
-					if ! gl_resp=$(fetch_and_validate "${gl_api_base}?per_page=100"); then
+					if ! fetch_to_file "${gl_api_base}?per_page=100" "$gl_resp_file"; then
 						epr "GitLab API request failed for dev releases"
+						rm -f "$gl_resp_file"
 						return 1
 					fi
-					gl_tag_name=$(jq -r '.[] | .tag_name' <<<"$gl_resp" 2>/dev/null | get_highest_ver) || { epr "Failed to get highest version"; return 1; }
-					if ! gl_resp=$(fetch_and_validate "${gl_api_base}/${gl_tag_name}"); then
+					gl_tag_name=$(jq -r '.[] | .tag_name' "$gl_resp_file" 2>/dev/null | get_highest_ver) || { epr "Failed to get highest version"; rm -f "$gl_resp_file"; return 1; }
+					rm -f "$gl_resp_file"
+					if ! fetch_to_file "${gl_api_base}/${gl_tag_name}" "$gl_resp_file"; then
 						epr "GitLab API request failed for release ${gl_tag_name}"
+						rm -f "$gl_resp_file"
 						return 1
 					fi
 				elif [ "$ver" = "latest" ]; then
-					if ! gl_resp=$(fetch_and_validate "${gl_api_base}/permalink/latest"); then
+					if ! fetch_to_file "${gl_api_base}/permalink/latest" "$gl_resp_file"; then
 						epr "GitLab API request failed for latest release"
+						rm -f "$gl_resp_file"
 						return 1
 					fi
-					gl_tag_name=$(jq -r '.tag_name' <<<"$gl_resp") || { epr "Failed to get tag name from latest release"; return 1; }
+					gl_tag_name=$(jq -r '.tag_name' "$gl_resp_file") || { epr "Failed to get tag name from latest release"; rm -f "$gl_resp_file"; return 1; }
 				else
-					if ! gl_resp=$(fetch_and_validate "${gl_api_base}/${ver}"); then
+					if ! fetch_to_file "${gl_api_base}/${ver}" "$gl_resp_file"; then
 						epr "GitLab API request failed for release ${ver}"
+						rm -f "$gl_resp_file"
 						return 1
 					fi
 					gl_tag_name="$ver"
 				fi
 
-				gl_asset=$(jq -r '.assets.links[] | select(.name | endswith(".rvp") or endswith(".mpp")) | {url: .direct_asset_url, name: .name}' <<<"$gl_resp" 2>/dev/null | head -1)
-				if [ -z "$gl_asset" ] || [ "$gl_asset" = "null" ]; then
+				# Extract asset URL and name (look for .rvp or .mpp in links)
+				gl_asset_url=$(jq -r '.assets.links[] | select(.name | endswith(".rvp") or endswith(".mpp")) | .direct_asset_url // .url' "$gl_resp_file" 2>/dev/null | head -1)
+				gl_asset_name=$(jq -r '.assets.links[] | select(.name | endswith(".rvp") or endswith(".mpp")) | .name' "$gl_resp_file" 2>/dev/null | head -1)
+				rm -f "$gl_resp_file"
+
+				if [ -z "$gl_asset_url" ] || [ "$gl_asset_url" = "null" ]; then
 					epr "No patches asset (.rvp or .mpp) found in GitLab release"
 					return 1
 				fi
-
-				gl_asset_url=$(jq -r '.url' <<<"$gl_asset")
-				gl_asset_name=$(jq -r '.name' <<<"$gl_asset")
 				pr "GitLab asset URL: $gl_asset_url" >&2
-				if [ -z "$gl_asset_url" ] || [ "$gl_asset_url" = "null" ]; then
-					epr "Invalid or empty asset URL from GitLab"
-					return 1
-				fi
-				gl_file="${dir}/${gl_asset_name}"
 
+				gl_file="${dir}/${gl_asset_name}"
 				if ! req "$gl_asset_url" "$gl_file" >&2; then
 					epr "Failed to download from GitLab: $gl_asset_url"
 					return 1
