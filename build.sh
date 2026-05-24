@@ -76,8 +76,9 @@ for table_name in $(toml_get_table_names); do
 	patches_ver=$(toml_get "$t" patches-version) || patches_ver=$DEF_PATCHES_VER
 	cli_src=$(toml_get "$t" cli-source) || cli_src=$DEF_CLI_SRC
 	cli_ver=$(toml_get "$t" cli-version) || cli_ver=$DEF_CLI_VER
+	patches_src_gitlab=$(toml_get "$t" patches-source-gitlab) || patches_src_gitlab=""
 
-	if ! PREBUILTS="$(get_prebuilts "$cli_src" "$cli_ver" "$patches_src" "$patches_ver")"; then
+	if ! PREBUILTS="$(get_prebuilts "$cli_src" "$cli_ver" "$patches_src" "$patches_ver" "$patches_src_gitlab")"; then
 		epr "Could not get prebuilts"
 		continue
 	fi
