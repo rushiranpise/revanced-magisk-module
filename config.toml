@@ -1,12 +1,19 @@
 enable-module-update = false # set this to false if you do not want to receive updates for the module
 parallel-jobs = 1
 arch = "arm64-v8a"
+build-mode = "apk"
+dpi = "nodpi anydpi 120-640dpi"
+version = "auto"
 #cli-version = "dev"
 #patches-version = "dev"
 # add 'enabled = false' for not patching a specific app or remove it from the config
 # see https://github.com/j-hc/revanced-magisk-module/blob/main/CONFIG.md for more detailed explanations
 
 # you can use rvmm-config-gen to generate a config
+[GooglePhotos]
+patches-source-gitlab = "ReVanced/revanced-patches"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
+uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
 
 [YouTube-Morphe]
 rv-brand = "Morphe"
@@ -129,6 +136,7 @@ uptodown-dlurl = "https://instagram.en.uptodown.com/android"
 [MacroDroid-Morphe]
 rv-brand = "Morphe"
 app-name = "MacroDroid"
+include-stock = "split"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
 cli-source = "MorpheApp/morphe-cli"
@@ -209,6 +217,7 @@ uptodown-dlurl = "https://transit.en.uptodown.com/android"
 [Truecaller-Morphe]
 rv-brand = "Morphe"
 app-name = "Truecaller"
+include-stock = "split"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
 cli-source = "MorpheApp/morphe-cli"
