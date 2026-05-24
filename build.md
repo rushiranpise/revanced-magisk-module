@@ -1,6 +1,7 @@
 Adguard-Morphe: 4.12.81  
 Automate-Morphe: 1.51.1  
 CamScanner-Morphe: 7.15.5.2604080000  
+DocScanner-Morphe: 6.8.18  
 Duolingo-Morphe: 6.77.5  
 Eyecon-Morphe: 4.2026.04.05.1300  
 Fing-Morphe: 12.11.9  
