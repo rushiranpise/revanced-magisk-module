@@ -155,6 +155,7 @@ uptodown-dlurl = "https://protonmail.en.uptodown.com/android"
 
 [Proton-Vpn-Hoodles-Morphe]
 rv-brand = "Morphe-Hoodles"
+enabled = false
 app-name = "Proton VPN"
 patches-source = "RookieEnough/De-Vanced"
 cli-source = "MorpheApp/morphe-cli"
