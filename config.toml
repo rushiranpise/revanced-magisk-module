@@ -235,7 +235,8 @@ uptodown-dlurl = "https://strava.en.uptodown.com/android"
 
 [Telegram-Morphe]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/telegram-fz-llc/telegram-web-version/"
-uptodown-dlurl = "https://telegram.en.uptodown.com/android"arch = "arm64-v8a"
+uptodown-dlurl = "https://telegram.en.uptodown.com/android"
+arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "Paresh-Maheshwari/paresh-patches"
