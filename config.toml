@@ -16,6 +16,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "hoo-dles/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://adguard-for-android.en.uptodown.com/android"
 
@@ -25,6 +26,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "BholeyKaBhakt/android-patches-xtra"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://automate-beta.en.uptodown.com/android"
 
@@ -34,6 +36,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "hoo-dles/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://camscanner-pdf-creator.en.uptodown.com/android"
 
@@ -44,6 +47,7 @@ dpi = "nodpi"
 enabled = false
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://doc-scanner.en.uptodown.com/android"
 
@@ -53,6 +57,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "hoo-dles/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://duolingo.en.uptodown.com/android"
 
@@ -63,6 +68,7 @@ dpi = "nodpi"
 enabled = false
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://eyecon-phone-dialer-and-cont-eyecon.en.uptodown.com/android"
 
@@ -71,8 +77,9 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/facebook"
 arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = true
-include-stock = "disable"
+include-stock = "merged"
 patches-source = "meridianfresco/morphe-meta-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://facebook.en.uptodown.com/android"
 
@@ -83,6 +90,7 @@ dpi = "nodpi"
 enabled = false
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://fing-network-tools.en.uptodown.com/android"
 
@@ -95,6 +103,7 @@ included-patches = """\
     'Enable DCIM folders backup control' \
     """
 patches-source = "RookieEnough/De-Vanced"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
 
@@ -103,8 +112,9 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
 arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = true
-include-stock = "disable"
+include-stock = "merged"
 patches-source = "crimera/piko"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://instagram.en.uptodown.com/android"
 
@@ -115,6 +125,7 @@ dpi = "nodpi"
 enabled = false
 # include-stock = "split"
 patches-source = "brosssh/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://komoot.en.uptodown.com/android"
 
@@ -126,6 +137,7 @@ enabled = false
 # include-stock = "split"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://macrodroid.en.uptodown.com/android"
 
@@ -135,6 +147,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "brosssh/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://mapy-cz.en.uptodown.com/android"
 
@@ -144,6 +157,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "MorpheApp/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
 
@@ -153,6 +167,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "RookieEnough/De-Vanced"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://protonmail.en.uptodown.com/android"
 
@@ -162,6 +177,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "hoo-dles/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe-Hoodles"
 uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
 
@@ -172,6 +188,7 @@ dpi = "nodpi"
 enabled = false
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe-Paresh"
 uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
 
@@ -181,6 +198,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "MorpheApp/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
 
@@ -190,6 +208,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "BholeyKaBhakt/android-patches-xtra"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://speedtest-net-mobile.en.uptodown.com/android"
 
@@ -199,6 +218,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "abhis1n/Morphe-Patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://splitwise.en.uptodown.com/android"
 
@@ -207,6 +227,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "RookieEnough/De-Vanced"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://strava.en.uptodown.com/android"
 
@@ -217,6 +238,7 @@ dpi = "nodpi"
 enabled = false
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 
 [TikTok-Morphe]
@@ -225,6 +247,7 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "RookieEnough/De-Vanced"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://tiktok.en.uptodown.com/android"
 
@@ -237,6 +260,7 @@ excluded-patches = """\
   'Custom Maps API Key' \
   """
 patches-source = "andronedev/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://transit.en.uptodown.com/android"
 
@@ -245,9 +269,10 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/true-software-scandinavia-ab/tr
 arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = true
-include-stock = "disable"
+include-stock = "merged"
 patches-source = "Paresh-Maheshwari/paresh-patches"
 patches-source-gitlab = "Paresh-Maheshwari/paresh-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
 
@@ -256,8 +281,9 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
 arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = true
-include-stock = "disable"
+include-stock = "merged"
 patches-source = "crimera/piko"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 
@@ -268,6 +294,7 @@ dpi = "nodpi"
 enabled = false
 # include-stock = "split"
 patches-source = "hoo-dles/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://wps-office.en.uptodown.com/android"
 
@@ -278,6 +305,7 @@ dpi = "nodpi"
 enabled = false
 # include-stock = "split"
 patches-source = "hoo-dles/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://xodo-docs.en.uptodown.com/android"
 
@@ -287,5 +315,6 @@ arch = "arm64-v8a"
 dpi = "nodpi"
 enabled = false
 patches-source = "MorpheApp/morphe-patches"
+remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
