@@ -1,5 +1,6 @@
 Facebook-Morphe: 490.0.0.63.82  
 Instagram-Morphe: 426.0.0.37.68  
+Telegram-Morphe: 12.6.4  
 
 Install [Microg](https://github.com/ReVanced/GmsCore/releases) for non-root YouTube and YT Music APKs  
 Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to detach YouTube and YT Music modules from Play Store  
@@ -12,6 +13,9 @@ Patches: crimera/patches-3.4.0.mpp
 CLI: MorpheApp/morphe-cli-1.8.1-all.jar  
 Patches: meridianfresco/patches-1.0.0.mpp  
 [Changelog](https://github.com/meridianfresco/morphe-meta-patches/releases/tag/v1.0.0)
+
+Patches: Paresh-Maheshwari/patches-1.17.0-dev.2.mpp  
+[Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.2)
 
 Patches: Paresh-Maheshwari/patches-1.17.0-dev.2.mpp  
 [Changelog](https://github.com/Paresh-Maheshwari/paresh-patches/releases/tag/v1.17.0-dev.2)  
