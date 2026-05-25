@@ -276,6 +276,16 @@ remove-rv-integrations-checks = true
 rv-brand = "Morphe"
 uptodown-dlurl = "https://truecaller.en.uptodown.com/android"
 
+[Twitter]
+patches-source = "crimera/piko"
+cli-source = "MorpheApp/morphe-cli"
+rv-brand = "Piko"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
+archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.twitter.android"
+build-mode = "module"
+version = "11.81.0-release.0"
+include-stock = "split"
+
 [Twitter-Morphe]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
 arch = "arm64-v8a"
